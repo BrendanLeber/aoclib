@@ -1,29 +1,21 @@
-.PHONY: tests
-tests:  ## run the tests to exersize the solution functions
-	python geometry.py --verbose
+.PHONY: test
+test:  ## run the tests to exersize the solution functions
+	python -m unittest --verbose
 
 
-.PHONY: format
-format:  ## format the source code according to black
-	black --line-length 100 --target-version py37 *.py
-	isort *.py
-
-
-.PHONY: lint
-lint:  ## use flake8 to lint the code
-	flake8 *.py
-
-
-.PHONY: pre-commit
-pre-commit: lint format  ## perform pre-commit checks to all code
-
+.PHONY: cover
+cover:  ## run unit tests with code coverage
+	coverage run -m unittest discover
+	coverage report
 
 .PHONY: clean
 clean:  ## remove generated files from the directory
 	-rm -rf __pycache__
+	-rm -rf **/__pycache__
 	-rm -rf .mypy_cache
-	-rm .coverage
-	-rm -rf htmlcov
+	-rm -rf **/.mypy_cache
+	-rm **/.coverage
+	-rm -rf **/htmlcov
 
 
 .PHONY: help
